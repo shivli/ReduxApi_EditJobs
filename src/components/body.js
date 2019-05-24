@@ -121,7 +121,7 @@ class Body extends Component {
         <Header />
         {<h1>Welcome {this.state.currentuser} </h1>}
         <Filter Mydata={this.myfilter} data={this.state.jobs} />
-        <Card data1={this.state.jobsInfo} />
+        <Card applydata={this.props} data1={this.state.jobsInfo} />
         <Footer />
 
       </div>
