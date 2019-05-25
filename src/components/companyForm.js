@@ -3,14 +3,27 @@ import { FormErrors } from '../FormErrors';
 /* Import Components */
 import Input from './formFields/input';
 import Button from './formFields/Button';
-// import axios from 'axios';
-// import { connect } from 'react-redux';
+import SKILLSET from './skillsset';
+import { WithContext as ReactTags } from 'react-tag-input'
+const KeyCodes = {
+    comma: 188,
+    enter: 13
+}
+const suggestions = SKILLSET.map(skills => {
+    return {
+        id: skills,
+        text: skills
+    }
+})
+const delimiters = [KeyCodes.comma, KeyCodes.enter]
 
 //Form for company adding jobs
 class CompanyForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            tags: [],
+            suggestions: suggestions,
             formErrors: {  position: '', contact: '', Experience: '', city: '' },
             // company_Name: '',
             position: '',
@@ -26,6 +39,25 @@ class CompanyForm extends Component {
 
         };
         this.handleInput = this.handleInput.bind(this);
+    }
+    handleDelete = (i) => {
+        const { tags } = this.state
+        this.setState({
+            tags: tags.filter((tag, index) => index !== i)
+        })
+    }
+
+    handleAddition = (tag) => {
+        this.setState(state => ({ tags: [...state.tags, tag] })
+        )
+    }
+
+    handleDrag = (tag, currPos, newPos) => {
+        const tags = [...this.state.tags]
+        const newTags = tags.slice()
+        newTags.splice(currPos, 1)
+        newTags.splice(newPos, 0, tag)
+        this.setState({ tags: newTags })
     }
 
     handleInput(e) {
@@ -80,7 +112,7 @@ class CompanyForm extends Component {
         this.setState({ formValid: this.state.companynameValid && this.state.positionValid && this.state.contactValid && this.state.cityValid && this.state.ExperienceValid });
 
     }
-    handleFormSubmit = () => {
+    handleFormSubmit =() => {
         if (localStorage.getItem('Currentuser')) {
             var company_Name = localStorage.getItem('Currentuser');
             company_Name = company_Name.replace(/"/g, "");
@@ -93,7 +125,8 @@ class CompanyForm extends Component {
             position: this.state.position,
             contact: this.state.contact,
             Experience: this.state.Experience,
-            city: this.state.city
+            city: this.state.city,
+            tags:this.state.tags,
 
         })
         this.props.history.push('/')
@@ -122,6 +155,7 @@ class CompanyForm extends Component {
 
     }
     render() {
+        const { tags, suggestions } = this.state
         return (
 
             <div>
@@ -170,7 +204,14 @@ class CompanyForm extends Component {
                                 placeholder={'city of the company'}
                                 handleChange={this.handleInput}
                             />{/* contact for the company */}
-
+                              <ReactTags
+                                tags={tags}
+                                suggestions={suggestions}
+                                delimiters={delimiters}
+                                handleDelete={this.handleDelete}
+                                handleAddition={this.handleAddition}
+                                handleDrag={this.handleDrag}
+                            />
                             <Button
                                 onClick={() => this.handleFormSubmit()}
                                 title={'Submit'}

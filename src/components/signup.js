@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import { FormErrors } from '../FormErrors'
-// import axios from 'axios';
-// import { connect } from 'react-redux';
-
 /* Import Components */
 import Input from './formFields/input';
-import Button from './formFields/Button'
+import Button from './formFields/Button';
+import SKILLSET from './skillsset';
+import { WithContext as ReactTags } from 'react-tag-input'
+const KeyCodes = {
+    comma: 188,
+    enter: 13
+}
 
-//Form for login
+const suggestions = SKILLSET.map(skills => {
+    return {
+        id: skills,
+        text: skills
+    }
+})
+const delimiters = [KeyCodes.comma, KeyCodes.enter]
+//Form for SIGNUP
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            tags: [],
+            suggestions: suggestions,
             SignUp: false,
             SignIn: true,
             formErrors: { name: '', email: '', password: '', phone: '' },
@@ -28,9 +40,28 @@ class SignUp extends Component {
         };
         this.handleInput = this.handleInput.bind(this);
     }
-    componentDidMount()
-    {
-        localStorage.getItem('isLoggedIn')==="true"&& this.props.history.push('/')
+    handleDelete = (i) => {
+        const { tags } = this.state
+        this.setState({
+            tags: tags.filter((tag, index) => index !== i)
+        })
+    }
+
+    handleAddition = (tag) => {
+        this.setState(state => ({ tags: [...state.tags, tag] })
+        )
+    }
+
+    handleDrag = (tag, currPos, newPos) => {
+        const tags = [...this.state.tags]
+        const newTags = tags.slice()
+        newTags.splice(currPos, 1)
+        newTags.splice(newPos, 0, tag)
+        this.setState({ tags: newTags })
+    }
+
+    componentDidMount() {
+        localStorage.getItem('isLoggedIn') === "true" && this.props.history.push('/')
     }
 
     handleInput(e) {
@@ -95,34 +126,37 @@ class SignUp extends Component {
         })
     }
 
-    handleFormSubmit = (event) => {
+    handleFormSubmit = event => {
         event.preventDefault();
-       const{name,password,email,phone}=this.state;
-       const role="user"
-        this.props.getsignup({ name,password,email,phone,role })
+        const { name, password, email, phone, tags } = this.state;
+        console.log(this.state);
+        const role = "user"
+        this.props.getsignup({ name, password, email, phone, role, tags })
         this.setState({
             name: '',
             password: '',
             email: '',
-            phone: ''
+            phone: '',
+            tags: []
 
 
         })
         return this.props.history.push('/signIn');
-    //    const role="user"
-    //    axios.post('http://localhost:8082/jobapp',{name,password,email,phone,role})
-    //    .then((response) => {
-    //        console.log(localStorage.setItem('data',JSON.stringify(response.data)))
-    //     this.props.history.push('/signIn')
-    //     console.log('Successfully added user');
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+        //    const role="user"
+        //    axios.post('http://localhost:8082/jobapp',{name,password,email,phone,role})
+        //    .then((response) => {
+        //        console.log(localStorage.setItem('data',JSON.stringify(response.data)))
+        //     this.props.history.push('/signIn')
+        //     console.log('Successfully added user');
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
 
     }
-   
+
     render() {
+        const { tags, suggestions } = this.state
         return (
 
             <div>
@@ -168,11 +202,29 @@ class SignUp extends Component {
 
                             />{/* name of the user */}
 
-                            <Button
+                            <ReactTags
+                                tags={tags}
+                                suggestions={suggestions}
+                                delimiters={delimiters}
+                                handleDelete={this.handleDelete}
+                                handleAddition={this.handleAddition}
+                                handleDrag={this.handleDrag}
+                            />
+
+
+                            {/* <Button
                                 action={this.handleFormSubmit}
                                 type={'primary'}
                                 title={'Submit'}
-                            /> { /*Submit */}
+                            /> */}
+                             { /*Submit */}
+
+                            {this.state.tags[3] && <Button
+                                action={this.handleFormSubmit}
+                                type={'submit'}
+                                title={'Submit'}
+                                // disabled={!this.state.formValidsignup}
+                            />}
                         </div>
                     </form>
 

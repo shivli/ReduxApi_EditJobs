@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
- 
+import {Link , withRouter} from 'react-router-dom';
+
 class Header extends Component {
+    logout=()=>{
+        localStorage.clear();
+        this.props.history.push('/signIn');
+    }
     render(){
         return(
             <div className="header">
@@ -12,11 +16,11 @@ class Header extends Component {
               <li><Link to='/signUp'><span className="glyphicon glyphicon-log-in" ></span> signUp</Link></li>
               <li><Link to='/signIn'><span className="glyphicon glyphicon-user"></span> signIn</Link></li>
               <li><Link to='/CompanyForm'><span className="glyphicon glyphicon-plus"></span> Post Jobs</Link></li>
-            
+              <li onClick = {this.logout}> Logout</li>              
               </ul>
             </div>
             </div>
         )
     }
 }
-export default Header;
+export default withRouter(Header);

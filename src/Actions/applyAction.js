@@ -13,6 +13,7 @@ export const apply_job = (data) => {
             .then((res) => {
                 if (res.data.errors) {
                     window.alert(JSON.stringify(res.data.messaage));
+                    console.log("applied success.")
                 }
                 else {
                         dispatch(applyJob(res.data));
@@ -37,6 +38,7 @@ export const get_applyjob = (userid) => {
     return dispatch => {
         axios.get(url)
             .then((res) => {
+                // console.log(res);
                 dispatch(getapply_data(res.data));
             }).catch((err) => {
                 return err;
