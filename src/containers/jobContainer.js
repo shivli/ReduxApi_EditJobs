@@ -13,7 +13,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return {
         dispatch,
-        getjob_user: (company_Name) => dispatch(getjob_user(company_Name)),
+        getjob_user: (company_Name,skills) => dispatch(getjob_user(company_Name,skills)),
         apply_job:(data)=>dispatch(apply_job(data)),
         get_applyjob:(userid)=>dispatch(get_applyjob(userid)),
         get_applyjob_company:(company)=>dispatch(get_applyjob_company(company)),

@@ -95,7 +95,8 @@ class SignIn extends Component {
       localStorage.setItem("Currentuser", JSON.stringify(nextProps.currentUser.name));
       localStorage.setItem("user_type", JSON.stringify(nextProps.currentUser.role));
       localStorage.setItem('Currentid', JSON.stringify(nextProps.currentUser._id));
-
+      localStorage.setItem('skills', JSON.stringify(nextProps.currentUser.skills));
+     
       return this.props.history.push('/')
 
     })

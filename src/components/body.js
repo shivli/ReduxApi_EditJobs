@@ -14,26 +14,42 @@ class Body extends Component {
       isloggedIn: localStorage.getItem('isLoggedIn')
     }
   }
-  componentWillMount() {
-    if (localStorage.getItem('user_type') === "2" || localStorage.getItem('user_type') === null) {
+  componentWillMount(){
+    if (localStorage.getItem('user_type') === "2") {
+      var skills=JSON.parse(localStorage.getItem('skills'))
+      this.props.getjob_user(null,skills);
+    }
+    else if (localStorage.getItem('user_type') === null) {
       this.props.getjob_user();
-      this.setState({
-        jobsInfo: this.props.alljobs,
-        jobs: this.props.alljobs
-      })
-
     }
     else {
-      var company_Name = JSON.parse(this.state.currentuser)
-      this.props.getjob_user(company_Name);
-      this.setState({
-        jobsInfo: this.props.alljobs,
-        jobs: this.props.alljobs
-      })
+      var companyname=JSON.parse(this.state.currentuser)
+      this.props.getjob_user(companyname);
     }
 
 
   }
+
+  // componentWillMount() {
+  //   if (localStorage.getItem('user_type') === "2" || localStorage.getItem('user_type') === null) {
+  //     this.props.getjob_user();
+  //     this.setState({
+  //       jobsInfo: this.props.alljobs,
+  //       jobs: this.props.alljobs
+  //     })
+
+  //   }
+  //   else {
+  //     var company_Name = JSON.parse(this.state.currentuser)
+  //     this.props.getjob_user(company_Name);
+  //     this.setState({
+  //       jobsInfo: this.props.alljobs,
+  //       jobs: this.props.alljobs
+  //     })
+  //   }
+
+
+  // }
   // componentDidMount(){
   //   if (localStorage.getItem('user_type') === "2" || localStorage.getItem('user_type') === null) {
   //     axios.get('http://localhost:8082/jobs')
@@ -79,40 +95,40 @@ class Body extends Component {
       jobsInfo: nextProps.alljobs,
       jobs: nextProps.alljobs
     })
-    if (localStorage.getItem('user_type') === null) {
+    // if (localStorage.getItem('user_type') === null) {
 
-      if (this.state.count === 0) {
-        this.props.getjob_user();
-        this.setState({
-          jobsInfo: this.props.alljobs,
-          jobs: this.props.alljobs,
-          componentWillReceiveProps(nextProps) {
-            this.setState({
-              jobsInfo: nextProps.alljobs,
-              jobs: nextProps.alljobs
-            })
-            if (localStorage.getItem('user_type') === null) {
+    //   if (this.state.count === 0) {
+    //     this.props.getjob_user();
+    //     this.setState({
+    //       jobsInfo: this.props.alljobs,
+    //       jobs: this.props.alljobs,
+    //       componentWillReceiveProps(nextProps) {
+    //         this.setState({
+    //           jobsInfo: nextProps.alljobs,
+    //           jobs: nextProps.alljobs
+    //         })
+    //         if (localStorage.getItem('user_type') === null) {
 
-              if (this.state.count === 0) {
-                this.props.getjob_user();
-                this.setState({
-                  jobsInfo: this.props.alljobs,
-                  jobs: this.props.alljobs,
-                  count: 1
-                })
+    //           if (this.state.count === 0) {
+    //             this.props.getjob_user();
+    //             this.setState({
+    //               jobsInfo: this.props.alljobs,
+    //               jobs: this.props.alljobs,
+    //               count: 1
+    //             })
 
-              }
-
-
-            }
-
-          }
-        })
-
-      }
+    //           }
 
 
-    }
+    //         }
+
+    //       }
+    //     })
+
+    //   }
+
+
+    // }
   }
   render() {
     return (

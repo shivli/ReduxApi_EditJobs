@@ -2,11 +2,14 @@ const SKILLSET = [
     "React",
     "Angular",
     "Java",
-    "Node.js",
-    "Php",
+    "Javascript",
+    "Express",
+    "Mongo",
     "HTML",
     "CSS",
     "Python",
+    "Django",
+    "Rest",
     "Machine Learning"
 
     

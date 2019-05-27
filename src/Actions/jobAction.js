@@ -21,7 +21,7 @@ export const updateJobSucess = (data) => {
     }
 }
 
-export const getjob_user = (company) => {
+export const getjob_user = (company,userskills) => {
     if (company) {
         return dispatch => {
             axios.get('http://localhost:8082/getjobs', {
@@ -37,6 +37,22 @@ export const getjob_user = (company) => {
             })
 
         }
+    }
+    else if(userskills)
+    {
+        return dispatch => {
+            axios.get('http://localhost:8082/loginjobs', {
+                params: {
+                  skills:userskills
+                }
+              }).then((res) => {
+                dispatch(getData(res.data));
+            }).catch((err) => {
+                return err;
+            })
+
+        }
+
     }
     else {
         return dispatch => {

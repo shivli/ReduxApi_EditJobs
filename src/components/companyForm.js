@@ -75,10 +75,6 @@ class CompanyForm extends Component {
         let cityValid = this.state.cityValid
 
         switch (fieldName) {
-            // case 'company_Name':
-            //     companynameValid = value.match(/^[a-zA-Z]+$/);;
-            //     fieldValidationErrors.company_Name = companynameValid ? '' : ' is invalid';
-            //     break;
             case 'position':
                 positionValid = value.match(/^[a-zA-Z]+$/);;
 
@@ -118,7 +114,7 @@ class CompanyForm extends Component {
             company_Name = company_Name.replace(/"/g, "");
         }
 
-        console.log(123)
+        // console.log(123)
 
         this.props.postJob({
             company_Name: company_Name,
@@ -130,29 +126,6 @@ class CompanyForm extends Component {
 
         })
         this.props.history.push('/')
-        // this.setState({
-        //     company_Name: '',
-        //     position: '',
-        //     contact: '',
-        //     Experience: '',
-        //     city: ''
-
-
-        // })
-
-        // this.props.history.push('/');
-        // event.preventDefault();
-        // const { company_Name, position, contact, Experience, city } = this.state;
-        // axios.post('http://localhost:8082/newjobs', { company_Name, position, contact, Experience, city })
-        //     .then((response) => {
-        //         //console.log(response)
-        //          return this.props.history.push('/')
-        //        // console.log('Successfully added job');
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-
     }
     render() {
         const { tags, suggestions } = this.state
@@ -163,15 +136,6 @@ class CompanyForm extends Component {
                             <FormErrors formErrors={this.state.formErrors} />
                         </div>
                         <div className="companyformComponents">
-
-                            {/* <Input inputType={'text'}
-                                title={'company_Name'}
-                                name={"company_Name"}
-                                value={this.state.company_Name}
-                                placeholder={'Company Name'}
-                                handleChange={this.handleInput}
-
-                            /> Company name */}
 
                             <Input inputType={'text'}
                                 title={' position'}
