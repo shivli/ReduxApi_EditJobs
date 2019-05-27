@@ -10,8 +10,8 @@ const SKILLSET = [
     "Python",
     "Django",
     "Rest",
-    "Machine Learning"
-
-    
+    "Machine Learning",
+    "Data Analytics",
+    "Data Visualization" 
   ];
   export default SKILLSET;
